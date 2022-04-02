@@ -4,6 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
+    <script src="/script.js"></script>
     <title>London Fluff</title>
   </head>
 
@@ -22,7 +23,7 @@
       <div>
         <div>Round 1</div>
         <form action="/" method="POST">
-            <select name="player">
+            <select name="player" id="player">
             <option value="RED" <%- (player == "RED") ? "selected=selected" : "" %>>RED</option>
             <option value="GREEN" <%- (player == "GREEN") ? "selected=selected" : "" %>>GREEN</option>
             <option value="BLUE" <%- ( player == "BLUE") ? "selected=selected" : "" %>>BLUE</option>
@@ -31,24 +32,34 @@
         </form>
         <div>Game's remaining dice: 25</div>
         <div>My remaining dice: 5</div>
-        <div><%= activePlayer %> 's turn</div>
+        <div><span id="activePlayer"><%= activePlayer %></span>'s turn</div>
 
 
         <% if (bid.count) { %>
-            <div>Current bid: <%= bid.count %> <%= bid.value %>s </div>
+            <div>Current bid: <span id="bidCount"><%= bid.count %></span> <span id="bidValue"><%= bid.value %></span>s </div>
             <% } %>
+
+
+        <% if (activePlayer === player) { %>
 
         <button>Call fluff!</button>
 
-        <% if (dice.length) { %>
+        <% } %>
 
+        <% if (dice && dice.length) { %>
+
+
+        <% if (activePlayer === player) { %>
         <form action="/bid" method="POST">
+          <input type="hidden" name="player" value=<%- player %> >
             <label>Count</label>
             <input name="count" type="number" >
             <label>Value</label>
             <input name="value" type="number" >
             <button type="submit">Bid!</button>
         </form>
+
+        <% } %>
             <div>Die 1: <%= dice[0] %></div>
             <div>Die 2: <%= dice[1] %></div>
             <div>Die 3: <%= dice[2] %></div>

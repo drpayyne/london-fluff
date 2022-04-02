@@ -22,7 +22,27 @@ const randomize = (count) => {
 };
 
 router.get('/', function (req, res, next) {
-  res.render('index', { player: '', dice: players[activePlayer], bid, activePlayer });
+  const player = req.query.player || '';
+  const dice = player ? players[player] : [];
+
+  console.log('Rendering player', player);
+
+  res.render('index', {
+    player,
+    dice,
+    bid,
+    activePlayer,
+  });
+});
+
+router.get('/refresh', function (req, res, next) {
+  const data = {
+    bid,
+    activePlayer,
+  };
+
+  res.setHeader('Content-Type', 'application/json');
+  res.end(JSON.stringify(data));
 });
 
 router.post('/', function (req, res, next) {
@@ -33,11 +53,14 @@ router.post('/', function (req, res, next) {
 });
 
 router.post('/bid', function (req, res, next) {
-  const player = activePlayer;
+  const player = req.body.player;
   const count = req.body.count;
   const value = req.body.value;
 
   activePlayer = activePlayer == 'RED' ? 'GREEN' : 'GREEN' ? 'BLUE' : 'RED';
+
+  console.log(player, 'completed');
+  console.log(activePlayer, 'to play');
 
   bid.count = count;
   bid.value = value;
