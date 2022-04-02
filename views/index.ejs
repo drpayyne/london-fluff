@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
+    <title>London Fluff</title>
+  </head>
+
+  <body>
+    <section class="hero is-info is-bold is-fullheight">
+      <div class="hero-body">
+        <div class="container has-text-centered">
+          <h1 class="title">London Fluff</h1>
+          <h2 class="subtitle">
+            Online <strong>Fluff</strong> to play with friends and family on
+            your local network.
+          </h2>
+        </div>
+      </div>
+
+      <div>
+        <div>Round 1</div>
+        <form action="/" method="POST">
+            <select name="player">
+            <option value="RED" <%- (player == "RED") ? "selected=selected" : "" %>>RED</option>
+            <option value="GREEN" <%- (player == "GREEN") ? "selected=selected" : "" %>>GREEN</option>
+            <option value="BLUE" <%- ( player == "BLUE") ? "selected=selected" : "" %>>BLUE</option>
+          </select>
+          <button type="submit">SHUFFLE</button>
+        </form>
+        <div>Game's remaining dice: 25</div>
+        <div>My remaining dice: 5</div>
+        <div><%= activePlayer %> 's turn</div>
+
+
+        <% if (bid.count) { %>
+            <div>Current bid: <%= bid.count %> <%= bid.value %>s </div>
+            <% } %>
+
+        <button>Call fluff!</button>
+
+        <% if (dice.length) { %>
+
+        <form action="/bid" method="POST">
+            <label>Count</label>
+            <input name="count" type="number" >
+            <label>Value</label>
+            <input name="value" type="number" >
+            <button type="submit">Bid!</button>
+        </form>
+            <div>Die 1: <%= dice[0] %></div>
+            <div>Die 2: <%= dice[1] %></div>
+            <div>Die 3: <%= dice[2] %></div>
+            <div>Die 4: <%= dice[3] %></div>
+            <div>Die 5: <%= dice[4] %></div>
+        <% } %>
+      </div>
+    </section>
+  </body>
+</html>
