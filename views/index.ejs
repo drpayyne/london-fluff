@@ -47,24 +47,25 @@
         <% } %>
 
         <% if (dice && dice.length) { %>
-
-
-        <% if (activePlayer === player) { %>
-        <form action="/bid" method="POST">
-          <input type="hidden" name="player" value=<%- player %> >
-            <label>Count</label>
-            <input name="count" type="number" >
-            <label>Value</label>
-            <input name="value" type="number" >
-            <button type="submit">Bid!</button>
-        </form>
-
-        <% } %>
-            <div>Die 1: <%= dice[0] %></div>
-            <div>Die 2: <%= dice[1] %></div>
-            <div>Die 3: <%= dice[2] %></div>
-            <div>Die 4: <%= dice[3] %></div>
-            <div>Die 5: <%= dice[4] %></div>
+          <% if (activePlayer === player) { %>
+            <form action="/bid" method="POST">
+              <input type="hidden" name="player" value=<%- player %> >
+                <label>Count</label>
+                <input name="count" type="number" >
+                <label>Value</label>
+                <input name="value" type="number" >
+                <button type="submit">Bid!</button>
+            </form>
+          <% } %>
+          <% for(let i=0; i<dice.length; i++) {%>
+            <% if(dice[i] == 0) { %>
+              <del>
+                <div>Die <%= i+1 %></div>
+              </del>
+            <% } else {  %>
+              <div>Die <%= i+1 %>: <%= dice[i] %></div>
+            <% } %>
+          <% } %>
         <% } %>
       </div>
     </section>

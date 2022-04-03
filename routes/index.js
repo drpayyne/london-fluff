@@ -15,8 +15,8 @@ let activePlayer = 'RED';
 
 const randomize = (count) => {
   const dice = [];
-  for (let index = 0; index < count; index++) {
-    dice.push(randomatic('?', 1, { chars: '23456X' }));
+  for (let index = 0; index < 5; index++) {
+    dice[index] = index < count ? randomatic('?', 1, { chars: '23456X' }) : 0;
   }
   return dice;
 };
